@@ -1,4 +1,4 @@
-
+"""
 #Step 1: get input from user and create variables
 var1 = str(input())              #RLE original
 var2 = int(input())              #position of character
@@ -40,7 +40,13 @@ else:
 while var2 >= int(list2[0]):
     var2 -= int(list2[0])
     list1.pop(0)
+    list2.pop(0)
 var5 = list1[0]
 
 #Step 5:print the character at position
 print(var5)
+#Test results : 141/141 passed
+#longest one: 2.2811791s        s2.3-106.in
+#total time 32.097953s
+"""
+
