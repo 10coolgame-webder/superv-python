@@ -55,8 +55,9 @@ var1 = str(input())              #input string
 var2 = ""                        #current string
 count = 0                        #number of strings
 list1 = []                       #list of strings
-list2 = []                       #list of duplicates
-list3 = set()                       #list of letters
+list2 = set()                    #list of duplicates
+list3 = []                       #list of characters
+list4 = []                       #list of removed strings
 n = 0                            # current string being proccessed
 for i in var1:
     if i.isdigit():
@@ -69,21 +70,34 @@ for i in range(count):
 
 #Step 2, find out what numbers are duplicate in each string and add them to a list
 for i in list1:
+    list4.append("")
     o = 0
+    l = 1
     n += 1
     for j in i:
         if j in list3:
-            list2.append(j)
-        list3.add(j)
+            list2.add(j)
+        else:
+            list3.append(j)
+    print(list2)
     for j in i:
         o += 1
+        print(o)
         if o % 2 == 0:
-            list1[n-1] = list1[n-1][:o] + "" + list1[n-1][o+1:]
-    print(list1[n-1], "\n", list2)
-    if set(list2).issubset(set(list1[n-1])) or set(list2).isdisjoint(set(list1[n-1])):
+            list1[n-1] = list1[n-1][:o-1] + " " + list1[n-1][o:]
+        print(list1[n-1], "\n list1 string ", n)
+        l += 1
+        print(l)
+        if l % 2 == 0:
+            list4[n-1] = list4[n-1][:l-1] + j + " "
+        print(list4[n-1], "\n list4 string ", n)
+    #list1[n-1] = list1[n-1].replace(" ", "")
+    print(list1[n-1], "\nlist1\n", list2, "duplicates\n")
+    if set(list2).issubset(set(list1[n-1])) and set(list4).isdisjoint(set(list1[n-1])) or set(list2).isdisjoint(set(list1[n-1])) and set(list4).issubset(set(list1[n-1])):    
         list1[n-1] = "T\n"
     else:
         list1[n-1] = "F\n"
+    print(list1[n-1])
     list2.clear()
     list3.clear()
         
