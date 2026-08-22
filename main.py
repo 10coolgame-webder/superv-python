@@ -50,3 +50,43 @@ print(var5)
 #total time 32.097953s
 """
 
+# Step 1, get input from user and create variables and lists
+var1 = str(input())              #input string
+var2 = ""                        #current string
+count = 0                        #number of strings
+list1 = []                       #list of strings
+list2 = []                       #list of duplicates
+list3 = set()                       #list of letters
+n = 0                            # current string being proccessed
+for i in var1:
+    if i.isdigit():
+        count = count * 10 + int(i)
+    else:
+        break
+for i in range(count):
+    var2 = str(input())
+    list1.append(var2)
+
+#Step 2, find out what numbers are duplicate in each string and add them to a list
+for i in list1:
+    o = 0
+    n += 1
+    for j in i:
+        if j in list3:
+            list2.append(j)
+        list3.add(j)
+    for j in i:
+        o += 1
+        if o % 2 == 0:
+            list1[n-1] = list1[n-1][:o] + "" + list1[n-1][o+1:]
+    print(list1[n-1], "\n", list2)
+    if set(list2).issubset(set(list1[n-1])) or set(list2).isdisjoint(set(list1[n-1])):
+        list1[n-1] = "T\n"
+    else:
+        list1[n-1] = "F\n"
+    list2.clear()
+    list3.clear()
+        
+
+#Step 3, print the results
+print("".join(list1))
