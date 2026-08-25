@@ -68,7 +68,7 @@ for i in range(count):
     var2 = str(input())
     list1.append(var2)
 
-#Step 2, find out what numbers are duplicate in each string and add them to a list
+#Step 2, basicly do everything
 for i in list1:
     list4.append("")
     o = 0
@@ -93,7 +93,7 @@ for i in list1:
         print(list4[n-1], "\n list4 string ", n)
     #list1[n-1] = list1[n-1].replace(" ", "")
     print(list1[n-1], "\nlist1\n", list2, "duplicates\n")
-    if set(list2).issubset(set(list1[n-1])) and set(list4).isdisjoint(set(list1[n-1])) or set(list2).isdisjoint(set(list1[n-1])) and set(list4).issubset(set(list1[n-1])):    
+    if set(list4).isdisjoint(set(list2)):    
         list1[n-1] = "T\n"
     else:
         list1[n-1] = "F\n"
