@@ -72,7 +72,7 @@ for i in range(count):
 for i in list1:
     list4.append("")
     o = 0
-    l = 1
+    l = 0
     n += 1
     for j in i:
         if j in list3:
@@ -89,11 +89,12 @@ for i in list1:
         l += 1
         print(l)
         if l % 2 == 0:
-            list4[n-1] = list4[n-1][:l-1] + j + " "
+            list4[n-1] = list4[n-1][:l-1] + j
         print(list4[n-1], "\n list4 string ", n)
-    #list1[n-1] = list1[n-1].replace(" ", "")
+    list1[n-1] = list1[n-1].replace(" ", "")
+    list4[n-1] = list4[n-1].replace(" ", "")
     print(list1[n-1], "\nlist1\n", list2, "duplicates\n")
-    if set(list4).isdisjoint(set(list2)):    
+    if set(list4[n-1].strip()).isdisjoint(set(list1[n-1].strip())) and (set(list1[n-1].strip()).issubset(set(list2)) or set(list4[n-1].strip()).issubset(set(list2))):    
         list1[n-1] = "T\n"
     else:
         list1[n-1] = "F\n"
