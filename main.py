@@ -75,9 +75,10 @@ numofpaintings = int(var1[2]) + 1
 for i in range(numofpens):
     currentpen = str(input())
     var2 = currentpen.split()
-    penlist[i] = [var2[0], var2[1]]
+    penlist.setdefault(var2[0], i : [var2[1]]).append( i : [var2[1]])
     var2.clear()
 for i in range(numofcolors):
     currentcolor = str(input())
     colorlist.append(currentcolor)
 #Step 3,
+#tOMMORROW nothes make penlist into a nested dictionary and implement .append function
