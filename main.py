@@ -64,8 +64,13 @@ numofcolors = 0                    #number of colors
 numofpaintings = 0                 #number of paintings
 penlist = {}                       #list of pens
 colorlist = []                     #list of colors
-paintingprettynesslist = []        #list of painting prettyness
+paintingprettyness = []            #list of painting prettyness
+prettynessoptions = []             #list of prettyness options
+temporarypainting = []             #temporary painting prettyness
+doublecheck = []                   #double check variable
 currentpen = ""                    #current pen
+paintings = []                     #list of paintings
+penchanges = []                    #list of pen changes
 
 #Step 2, read input1 and distribute the values to the variables and lists
 var1  = input1.split()
@@ -75,10 +80,52 @@ numofpaintings = int(var1[2]) + 1
 for i in range(numofpens):
     currentpen = str(input())
     var2 = currentpen.split()
-    penlist.setdefault(var2[0], i : [var2[1]]).append( i : [var2[1]])
+    #var2[0] = pen color, var2[1] = pen prettyness, i = pen number
+    penlist.setdefault(int(var2[0]), {}) [i + 1] = int(var2[1]) #Stores the pens, setdefault checks if the nested list exist or not
     var2.clear()
-for i in range(numofcolors):
-    currentcolor = str(input())
-    colorlist.append(currentcolor)
-#Step 3,
-#tOMMORROW nothes make penlist into a nested dictionary and implement .append function
+for i in range(numofpaintings - 1):
+    penchanges.append(str(input()))
+for i in range(1, numofcolors + 1):
+    colorlist.append(i)
+for p in range(numofpaintings):
+    temporarypainting.clear()
+    #print(penlist , "Penlist")
+    for i in penlist:
+    #Step 3, figure out which pen combination is the prettiest
+        #print(i , "Current Color")
+        temporarypainting.append(max(penlist[i].values())) # gets the prettiest pen of each color
+        #print(temporarypainting , "Temporary Painting")
+        #print(max(penlist[i].values()) , "Prittiest pen")
+    #Step 4, check if the second prettyest pen can be replaced with one of the other pens
+    for i in penlist:
+        doublecheck = temporarypainting.copy() # copies the original best colors
+        if len(penlist[i]) > 1: # checks if there is more than one pen of the current color
+            doublecheck[doublecheck.index(min(doublecheck))] = sorted(penlist[i].values())[0] # replaces the least pretty pen with the second prettiest pen of the current color
+        prettynessoptions.append(doublecheck) # adds it to the list of painting options
+        #print(doublecheck , "Double Check")
+    for i in prettynessoptions:
+        #print(i, "current check")
+        if sum(int(x) for x in i) > sum(int(x) for x in temporarypainting): # checks if the new painting is prettier than the original
+            temporarypainting = i.copy() # if it is, it becomes the new best painting
+            #print(temporarypainting , "New Best Painting")
+    prettynessoptions.clear() # clears the list of painting options for the next round
+    paintings.append(temporarypainting.copy()) # adds the best painting to the list of paintings
+    #print(temporarypainting , "Best painting")
+    #print(paintings , "Paintings")
+    if len(penchanges) > p:
+        penchanges[p] = penchanges[p].split() # 0 = operation 1 = pen number 2 = change number
+        if int(penchanges[p][0]) == 1:
+            for i in list(penlist):
+                for key in list(penlist[i]):
+                    if key == int(penchanges[p][1]):
+                        value = penlist[i].pop(key)
+                        penlist[int(penchanges[p][2])][int(penchanges[p][1])] = value
+        elif int(penchanges[p][0]) == 2:
+            for i in penlist:
+                for key in penlist[i]:
+                    if key == int(penchanges[p][1]):
+                        penlist[i][key] = int(penchanges[p][2])
+    #print("change" , p , penlist , "Penlist")
+#print(paintings)
+for painting in paintings:
+    print(sum(int(x) for x in painting)) # prints the prettyness of each painting
